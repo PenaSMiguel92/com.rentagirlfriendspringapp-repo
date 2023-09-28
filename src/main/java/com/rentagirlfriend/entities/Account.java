@@ -1,4 +1,4 @@
-package com.rentagirlfriend.entity;
+package com.rentagirlfriend.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

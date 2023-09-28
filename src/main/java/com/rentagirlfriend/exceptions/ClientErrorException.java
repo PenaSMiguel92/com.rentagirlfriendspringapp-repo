@@ -1,4 +1,4 @@
-package com.rentagirlfriend.exception;
+package com.rentagirlfriend.exceptions;
 
 public class ClientErrorException extends Exception {
     public ClientErrorException(String message) {

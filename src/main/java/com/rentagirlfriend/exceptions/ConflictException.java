@@ -1,4 +1,4 @@
-package com.rentagirlfriend.exception;
+package com.rentagirlfriend.exceptions;
 
 public class ConflictException extends Exception {
     public ConflictException(String message) {

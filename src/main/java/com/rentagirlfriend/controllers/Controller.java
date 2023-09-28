@@ -1,7 +1,6 @@
-package com.rentagirlfriend.controller;
+package com.rentagirlfriend.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rentagirlfriend.entity.Account;
-import com.rentagirlfriend.exception.ClientErrorException;
-import com.rentagirlfriend.exception.ConflictException;
-import com.rentagirlfriend.exception.UnauthorizedException;
-import com.rentagirlfriend.service.AccountService;
+import com.rentagirlfriend.entities.Account;
+import com.rentagirlfriend.exceptions.ClientErrorException;
+import com.rentagirlfriend.exceptions.ConflictException;
+import com.rentagirlfriend.exceptions.UnauthorizedException;
+import com.rentagirlfriend.services.AccountService;
 
 @RestController
 public class Controller {
@@ -32,16 +31,19 @@ public class Controller {
         return this.accountService.getAllAccounts();
     }
 
-    @PostMapping("/accounts")
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
-    public Account registerAccountHandler(@RequestBody Account account) throws ClientErrorException {
-        Optional<Account> accountOptional = Optional.ofNullable(this.accountService.registerAccount(account));
-        if (accountOptional.isPresent())
-            return accountOptional.get();
-
-        return null;
+    public Account registerAccountHandler(@RequestBody Account account) throws ClientErrorException, ConflictException {
+        return this.accountService.registerAccount(account);
     }
     
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public Account loginAccountHandler(@RequestBody Account account)
+            throws ClientErrorException, UnauthorizedException {
+        return this.accountService.loginAccount(account);
+    }
+
     @ExceptionHandler(ClientErrorException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String clientErrorExceptionHandler(ClientErrorException ex) {

@@ -1,4 +1,4 @@
-package com.rentagirlfriend.exception;
+package com.rentagirlfriend.exceptions;
 
 public class UnauthorizedException extends Exception {
     public UnauthorizedException(String message) {
