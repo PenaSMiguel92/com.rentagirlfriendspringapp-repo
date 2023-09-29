@@ -47,6 +47,9 @@ public class Account {
     private Location location;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    List<Booking> bookings;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     List<Message> messages;
 
 
