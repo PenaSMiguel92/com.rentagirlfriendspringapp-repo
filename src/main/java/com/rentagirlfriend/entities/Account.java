@@ -17,6 +17,8 @@ import lombok.ToString;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,17 +40,21 @@ public class Account {
         this.email = email;
     }
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "infoId")
-    private Info info;
+    private Profile info;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "locationId")
     private Location location;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     List<Booking> bookings;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     List<Message> messages;
 

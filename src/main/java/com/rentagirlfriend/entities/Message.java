@@ -1,5 +1,7 @@
 package com.rentagirlfriend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,9 +36,13 @@ public class Message {
     @Column(name = "posted_by")
     private long posted_by;
 
+    @Column(name = "received_by")
+    private long received_by;
+
     @Column(name = "time_posted_epoch")
     private long time_posted_epoch;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
     Account account;

@@ -4,32 +4,23 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.rentagirlfriend.entities.Account;
-import com.rentagirlfriend.exceptions.ClientErrorException;
-import com.rentagirlfriend.exceptions.ConflictException;
-import com.rentagirlfriend.exceptions.UnauthorizedException;
-import com.rentagirlfriend.services.AccountService;
+import com.rentagirlfriend.entities.*;
+import com.rentagirlfriend.exceptions.*;
+import com.rentagirlfriend.services.*;
 
 @RestController
 public class Controller {
     AccountService accountService;
+    MessageService messageService;
     @Autowired
-    public Controller(AccountService accountService) {
+    public Controller(AccountService accountService, MessageService messageService) {
         this.accountService = accountService;
+        this.messageService = messageService;
     }
 
-    @GetMapping("/accounts")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Account> getAllAccountsHandler() {
-        return this.accountService.getAllAccounts();
-    }
+    //Account mappings
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
@@ -43,6 +34,15 @@ public class Controller {
             throws ClientErrorException, UnauthorizedException {
         return this.accountService.loginAccount(account);
     }
+
+    //Message mappings
+
+    @GetMapping("/accounts/{account_id}/messages")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Message> getAllMessagesReceivedByAccountHandler(@PathVariable long account_id) {
+        return this.messageService.getAllMessagesReceived(account_id);
+    }
+
 
     @ExceptionHandler(ClientErrorException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

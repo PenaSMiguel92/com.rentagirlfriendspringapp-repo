@@ -19,10 +19,6 @@ public class AccountService {
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
-
-    public List<Account> getAllAccounts() {
-        return this.accountRepository.findAll();
-    }
     
     public Account registerAccount(Account account) throws ClientErrorException, ConflictException {
         if (account.getUsername().isBlank())

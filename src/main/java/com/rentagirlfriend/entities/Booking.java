@@ -46,8 +46,7 @@ public class Booking {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
     Account account;
-    //ToDo: figure out how to represent day-hour-minute
-    //begintime, endtime;
+    
     public Booking(long posted_by, double potential_earnings, LocalDateTime begin_time, LocalDateTime end_time) {
         this.posted_by = posted_by;
         this.potential_earnings = potential_earnings;
