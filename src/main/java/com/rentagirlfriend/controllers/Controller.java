@@ -37,10 +37,16 @@ public class Controller {
 
     //Message mappings
 
-    @GetMapping("/accounts/{account_id}/messages")
+    @GetMapping("/accounts/{username}/messages")
     @ResponseStatus(HttpStatus.OK)
-    public List<Message> getAllMessagesReceivedByAccountHandler(@PathVariable long account_id) {
-        return this.messageService.getAllMessagesReceived(account_id);
+    public List<Message> getAllMessagesReceivedByAccountHandler(@PathVariable("username") String username) {
+        return this.messageService.getAllMessagesReceivedByUsername(username);
+    }
+
+    @PostMapping("/accounts/{username}/messages")
+    @ResponseStatus(HttpStatus.OK)
+    public void sendMessageToAccountHandler(@RequestBody Message message, @PathVariable("username") String username) {
+        //In future, add a way to check if poster is a valid user and has a valid login.
     }
 
 
