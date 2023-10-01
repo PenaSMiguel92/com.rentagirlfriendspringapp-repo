@@ -15,7 +15,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @Data
-@Table(name = "information")
+@Table(name = "profile")
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

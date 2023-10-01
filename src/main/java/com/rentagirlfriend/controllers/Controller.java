@@ -3,6 +3,7 @@ package com.rentagirlfriend.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties.RSocket.Client;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +15,12 @@ import com.rentagirlfriend.services.*;
 public class Controller {
     AccountService accountService;
     MessageService messageService;
+    ProfileService profileService;
     @Autowired
-    public Controller(AccountService accountService, MessageService messageService) {
+    public Controller(AccountService accountService, MessageService messageService, ProfileService profileService) {
         this.accountService = accountService;
         this.messageService = messageService;
+        this.profileService = profileService;
     }
 
     //Account mappings
@@ -45,11 +48,25 @@ public class Controller {
 
     @PostMapping("/accounts/{username}/messages")
     @ResponseStatus(HttpStatus.OK)
-    public void sendMessageToAccountHandler(@RequestBody Message message, @PathVariable("username") String username) {
+    public void sendMessageToAccountHandler(@RequestBody Message message, @PathVariable("username") String username)
+            throws ClientErrorException {
         //In future, add a way to check if poster is a valid user and has a valid login.
         this.messageService.sendMessage(message, username);
     }
 
+    //Profile mappings
+
+    @GetMapping("/accounts/{username}/profile")
+    @ResponseStatus(HttpStatus.OK)
+    public Profile getProfileHandler(@PathVariable("username") String username) throws ClientErrorException {
+        return this.profileService.findProfileByUsername(username);
+    }
+    
+    @PostMapping("/accounts/{username}/profile")
+    @ResponseStatus(HttpStatus.OK)
+    public Profile registerProfileHandler(@RequestBody Profile profile, @PathVariable("username") String username) throws ClientErrorException {
+        return this.profileService.registerProfileToUsername(profile, username);
+    }
 
     @ExceptionHandler(ClientErrorException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

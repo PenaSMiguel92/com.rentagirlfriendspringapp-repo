@@ -42,8 +42,8 @@ public class Account {
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "infoId")
-    private Profile info;
+    @JoinColumn(name = "profileId")
+    private Profile profile;
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
