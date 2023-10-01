@@ -47,6 +47,7 @@ public class Controller {
     @ResponseStatus(HttpStatus.OK)
     public void sendMessageToAccountHandler(@RequestBody Message message, @PathVariable("username") String username) {
         //In future, add a way to check if poster is a valid user and has a valid login.
+        this.messageService.sendMessage(message, username);
     }
 
 
